@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Background from './assets/temp_back.jpeg'
 import './App.css'
 
 function App() {
@@ -8,28 +7,28 @@ function App() {
 
   return (
     <>
+	<div className="outer">
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <img src={Background} className="logo" alt="Background" />
       </div>
-      <h1>WE ARE GAMING</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+	  <div className="menu">
+		  <button className="menuButton"> chose realm </button>
+		  <button className="menuButton"> begin session </button>
+		  <button className="menuButton"> begin session </button>
+		  <button className="menuButton"> begin session </button>
+		  <button className="menuButton"> begin session </button>
+	  </div>
+	   <div className="card">
+        <p>  
+		  You have {count} tasks in progress
         </p>
+	    <button className="button"  onClick={() => setCount((count) => count + 1)}>	
+		  Create New Task	 
+		</button>  
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+	  </div>		  
     </>
-  )
+  );
 }
 
 export default App
