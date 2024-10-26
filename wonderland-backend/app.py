@@ -13,23 +13,40 @@ db.init_app(app)
 def home():
     return jsonify(message="Welcome to Wonderland Backend"), 200
 
-# Endpoint to get all tasks
-@app.route('/tasks', methods=['GET'])
-def get_tasks():
-    tasks = Task.query.all()
-    return jsonify([task.to_dict() for task in tasks])
+@app.route('/tasks', methods=['GET', 'POST'])
+def handle_tasks():
+    if request.method == 'GET':
+        tasks = Task.query.all()
+        return jsonify([task.to_dict() for task in tasks])
+    elif request.method == 'POST':
+        data = request.json
+        new_task = Task(task_name=data['task_name'], difficulty=data['difficulty'])
+        db.session.add(new_task)
+        db.session.commit()
+        return jsonify(new_task.to_dict()), 201
+    
+@app.route('/tasks/<int:task_id>', methods=['PUT'])
+def update_task_status(task_id):
+    task = Task.query.get(task_id)
+    if task is None:
+        return jsonify({'message': 'Task not found'}), 404
 
-# Endpoint to add a new task
-@app.route('/tasks', methods=['POST'])
-def add_task():
-    data = request.get_json()
-    new_task = Task(
-        task_name=data.get("task_name"),
-        difficulty=data.get("difficulty")
-    )
-    db.session.add(new_task)
+    data = request.json
+    # Update the completion status based on the incoming request
+    task.completed = data.get('completed', task.completed)
+
     db.session.commit()
-    return jsonify(new_task.to_dict()), 201
+    return jsonify({'message': 'Task updated successfully', 'task': task.to_dict()}), 200
+
+@app.route('/tasks/<int:task_id>', methods=['DELETE'])
+def delete_task(task_id):
+    task = Task.query.get(task_id)
+    if task is None:
+        return jsonify({'message': 'Task not found'}), 404
+
+    db.session.delete(task)
+    db.session.commit()
+    return jsonify({'message': 'Task deleted successfully'}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
