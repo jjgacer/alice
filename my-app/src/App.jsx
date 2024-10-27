@@ -19,7 +19,34 @@ import whileShroom from './assets/whiteShroom.png'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [task, setTask] = useState("");
+  const [diff, setDiff] = useState("easy");
+  const [importance, setImportance] = useState("");
+
+  const form = [
+	["task", ""],
+	["diff", ""],
+	["importance", ""]
+  ];
+
+  const updateTask = async(e) => {
+	e.preventDefault();
+	const {task, value} = e.target;
+	form[0][1] = value;
+  };
+
+  const updateDiff = async(e) => {
+	e.preventDefault();
+	setDiff(e.target.value);
+	form[1][1] = diff;
+  };
+
+  const handleSubmit = async(e) => {
+	e.preventDefault();
+	console.log(form[0][1]);
+	console.log(form[1][1]);
+  };
 
   return (
     <>
@@ -38,9 +65,33 @@ function App() {
         <p>  
 		  You have {count} tasks in progress
         </p>
-	    <button className="button"  onClick={() => setCount((count) => count + 1)}>	
+	  <div>
+	    <form>
+  	      <label for="tname">Task Name</label>
+		  <br></br>
+  	      <input onChange={updateTask} className="inputText" type="text" id="fname" name="firstname" placeholder="Task name.."></input>
+		  <br></br>	
+		 <label for="Difficulty">Difficulty</label>
+		  <br></br>
+    	 <select onChange={updateDiff} value={diff}  className="inputText">
+      	   <option value="easy">Easy</option>
+           <option value="medium">Medium</option>
+     	   <option value="hard">Hard</option>
+   		 </select>
+	  	<br></br>
+		 <label for="Importance">Importance</label>
+		  <br></br>
+    	 <select className="inputText"  id="importance" name="importance">
+      	   <option value="low">Low</option>
+           <option value="medium">Medium</option>
+     	   <option value="high">High</option>
+   		 </select>
+	  	<br></br>
+	    <button className="button" onClick={handleSubmit}>	
 		  Create New Task	 
-		</button>  
+		</button> 
+  	    </form>
+	  </div>
       </div>
 	  </div>		  
     </>
