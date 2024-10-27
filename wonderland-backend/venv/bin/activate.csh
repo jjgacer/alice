@@ -9,7 +9,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/Users/Simi/Desktop/Random Documents/Technica2024/alice/wonderland-backend/venv"
+setenv VIRTUAL_ENV "/Users/aminahasgharali/Documents/GitHub/alice/wonderland-backend/venv"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"
